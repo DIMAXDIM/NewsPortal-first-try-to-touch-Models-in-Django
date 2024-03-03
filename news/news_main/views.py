@@ -3,17 +3,24 @@
 from django.views.generic import ListView, DetailView
 from .models import Post
 
+from datetime import datetime
+
 class PostList(ListView):
     # Указываем модель, объекты которой мы будем выводить
     model = Post
     # Поле, которое будет использоваться для сортировки объектов
-    ordering = 'title'
+    ordering = 'created_at'
     # Указываем имя шаблона, в котором будут все инструкции о том,
     # как именно пользователю должны быть показаны наши объекты
-    template_name = 'post.html'
+    template_name = 'posts.html'
     # Это имя списка, в котором будут лежать все объекты.
     # Его надо указать, чтобы обратиться к списку объектов в html-шаблоне.
-    context_object_name = 'post'
+    context_object_name = 'posts'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['time_now'] = datetime.utcnow()
+        context['next_sale'] = "Распродажа в среду!"
+        return context
 
 
 class PostDetail(DetailView):
