@@ -30,6 +30,11 @@ class Post(models.Model):
     content = models.TextField()
     rating = models.FloatField(default=0.0)
 
+    def __str__(self):
+        return f'{self.title}: {self.content}'
+
+
+
     def preview(self):
         return self.content[:124] + '...'
 
